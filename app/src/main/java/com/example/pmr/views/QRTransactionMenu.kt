@@ -1,5 +1,4 @@
-//views/QRTransactionMenu.kt
-
+// /views/QRTransactionMenu.kt
 package com.example.pmr.views
 
 import androidx.compose.foundation.background
@@ -16,20 +15,25 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.pmr.R
+import androidx.compose.ui.unit.sp
+import com.example.pmr.navigation.NavRoutes
 
 enum class QRTransactionType(
     val iconRes: Int?, // Icon resource ID (nullable)
     val title: String,
     val description: String,
-    val onClick: () -> Unit // Action to be executed on click
+    val onClick: (NavHostController) -> Unit // Accepts navController
 ) {
     DeliveryRental(
         iconRes = R.drawable.delivery_icon,
         title = "Delivery Rental",
         description = "Manage rental deliveries to customers",
-        onClick = { println("Delivery Rental clicked!") }
+        onClick = { navController ->
+            // Navigate to DeliveryRental route
+            navController.navigate(NavRoutes.DeliveryRental.route)
+        }
     ),
     CustomerReturn(
         iconRes = R.drawable.return_icon,
@@ -41,32 +45,37 @@ enum class QRTransactionType(
         iconRes = R.drawable.replacement_icon,
         title = "Pallet Replacement",
         description = "Manage pallet replacements for customers",
-        onClick = { println("Transaction History clicked!") }
+        onClick = { println("Pallet Replacement clicked!") }
     ),
     PalletTransfer(
         iconRes = R.drawable.transfer_icon,
         title = "Pallet Transfer",
         description = "Manage pallet transfers between customers",
-        onClick = { println("Transaction History clicked!") }
+        onClick = { println("Pallet Transfer clicked!") }
     ),
     ReceivePallet(
         iconRes = R.drawable.receive_icon,
         title = "Receive Pallet",
         description = "Manage receive pallets",
-        onClick = { println("Transaction History clicked!") }
+        onClick = { println("Receive Pallet clicked!") }
     ),
 }
 
+// A single item in the transaction menu
 @Composable
 fun QRTransactionMenuItem(
-    transactionType: QRTransactionType
+    transactionType: QRTransactionType,
+    navController: NavHostController
 ) {
     Row(
         modifier = Modifier
             .height(72.dp)
             .fillMaxWidth()
             .padding(16.dp)
-            .clickable { transactionType.onClick() },
+            .clickable {
+                // Pass navController to onClick
+                transactionType.onClick(navController)
+            },
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (transactionType.iconRes != null) {
@@ -99,10 +108,38 @@ fun QRTransactionMenuItem(
                 text = transactionType.title,
                 style = androidx.compose.material3.MaterialTheme.typography.titleMedium
             )
+            if (transactionType.description.isNotEmpty()) {
+                Text(
+                    text = transactionType.description,
+                    style = androidx.compose.material3.MaterialTheme.typography.bodyMedium
+                )
+            }
+        }
+    }
+}
+
+// The main screen for QR transactions
+@Composable
+fun QRTransactionMenu(navController: NavHostController) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(0.dp)
+    ) {
+        Box(
+            modifier = Modifier.height(56.dp),
+            contentAlignment = Alignment.Center
+        ) {
             Text(
-                text = transactionType.description,
-                style = androidx.compose.material3.MaterialTheme.typography.bodyMedium
+                text = "QR Transactions",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.padding(16.dp)
             )
+        }
+
+        // Render each item
+        QRTransactionType.values().forEach { type ->
+            QRTransactionMenuItem(transactionType = type, navController = navController)
         }
     }
 }
@@ -110,29 +147,9 @@ fun QRTransactionMenuItem(
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun PreviewQRTransactionMenu() {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .padding(top = 50.dp)
-                .fillMaxWidth(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = "QR Transactions",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.SemiBold
-            )
-        }
-
-        QRTransactionMenuItem(transactionType = QRTransactionType.DeliveryRental)
-        QRTransactionMenuItem(transactionType = QRTransactionType.CustomerReturn)
-        QRTransactionMenuItem(transactionType = QRTransactionType.PalletReplacement)
-        QRTransactionMenuItem(transactionType = QRTransactionType.PalletTransfer)
-        QRTransactionMenuItem(transactionType = QRTransactionType.ReceivePallet)
-    }
+    // Using a placeholder since we don't have NavController in preview
+    QRTransactionMenuItem(
+        transactionType = QRTransactionType.DeliveryRental,
+        navController = androidx.navigation.compose.rememberNavController()
+    )
 }

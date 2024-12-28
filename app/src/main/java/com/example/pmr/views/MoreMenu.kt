@@ -1,3 +1,4 @@
+// /views/MoreMenu.kt
 package com.example.pmr.views
 
 import androidx.compose.foundation.background
@@ -52,7 +53,7 @@ fun MoreMenuItem(
             .height(72.dp)
             .fillMaxWidth()
             .padding(16.dp)
-            .clickable { transactionType.onClick() }, // Call the enum's onClick action
+            .clickable { transactionType.onClick() },
         verticalAlignment = Alignment.CenterVertically
     ) {
         // Icon Section (only if iconRes is not null)
@@ -65,7 +66,7 @@ fun MoreMenuItem(
                         color = Color(0xFFF0F2F5), // Background color F0F2F5
                         shape = RoundedCornerShape(6.dp) // Rounded corners
                     ),
-                contentAlignment = Alignment.Center // Center the icon inside the box
+                contentAlignment = Alignment.Center
             ) {
                 Icon(
                     painter = painterResource(id = transactionType.iconRes),
@@ -87,34 +88,29 @@ fun MoreMenuItem(
             Text(
                 text = transactionType.title,
                 style = androidx.compose.material3.MaterialTheme.typography.titleMedium
-
             )
-            Text(
-                text = transactionType.description,
-                style = androidx.compose.material3.MaterialTheme.typography.bodyMedium
-            )
+            if (transactionType.description.isNotEmpty()) {
+                Text(
+                    text = transactionType.description,
+                    style = androidx.compose.material3.MaterialTheme.typography.bodyMedium
+                )
+            }
         }
     }
 }
 
-@Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun PreviewMoreTransactionMenu() {
+fun MoreMenu() {
     Column(
         modifier = Modifier
-
             .fillMaxWidth(),
-
         verticalArrangement = Arrangement.spacedBy(0.dp)
-
     ) {
         Box(
             modifier = Modifier
-                .padding(top = 50.dp)
+//                .padding(top = 20.dp)
                 .height(56.dp),
-//                .padding(top = 30.dp), // Add top margin here
             contentAlignment = Alignment.Center
-
         ) {
             Text(
                 text = "More",
@@ -124,9 +120,14 @@ fun PreviewMoreTransactionMenu() {
             )
         }
 
-
         MoreMenuItem(transactionType = MoreTransactionType.ManageQrCodes)
         MoreMenuItem(transactionType = MoreTransactionType.TagChecker)
         MoreMenuItem(transactionType = MoreTransactionType.Logout)
     }
+}
+
+@Preview(showSystemUi = true, showBackground = true)
+@Composable
+fun PreviewMoreTransactionMenu() {
+    MoreMenu()
 }
