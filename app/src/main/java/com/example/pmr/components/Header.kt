@@ -1,9 +1,7 @@
-// /components/Header.kt
 package com.example.pmr.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -15,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pmr.R
 
+// Define the types of headers with optional left and right icons
 enum class HeaderType(
     val leftIcon: Int?, // Resource ID for the left icon (nullable)
     val rightIcon: Int? // Resource ID for the right icon (nullable)
@@ -34,7 +33,8 @@ enum class HeaderType(
     Create(
         leftIcon = null, // No left icon
         rightIcon = R.drawable.close_icon
-    )
+    );
+
 }
 
 @Composable
@@ -48,7 +48,7 @@ fun HeaderComposable(
         modifier = Modifier
             .fillMaxWidth()
             .height(56.dp),
-//            .padding(horizontal = 16.dp),
+//            .padding(horizontal = 16.dp), // Added horizontal padding for better spacing
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start // Align items to the start
     ) {
@@ -59,12 +59,7 @@ fun HeaderComposable(
                 contentDescription = "Left Icon",
                 modifier = Modifier
                     .size(24.dp)
-                    .clickable {
-                        // The parent composable decides what happens here.
-                        // By default, onLeftClick = {} is empty,
-                        // but typically you'd pass navController.popBackStack() or similar.
-                        onLeftClick()
-                    }
+                    .clickable { onLeftClick() }
             )
         } else {
             Spacer(modifier = Modifier.size(24.dp)) // Placeholder for alignment
@@ -96,6 +91,7 @@ fun HeaderComposable(
     }
 }
 
+// Object to provide different Header variants
 object Header {
     @Composable
     fun Add(
@@ -163,6 +159,42 @@ fun PreviewHeaderAdd() {
             // Example onLeftClick logic
             onLeftClick = { /* e.g. navController.popBackStack() */ },
             onRightClick = { /* Handle add action */ }
+        )
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun PreviewHeaderEdit() {
+    MaterialTheme {
+        Header.Edit(
+            title = "Edit Item",
+            onLeftClick = { /* Handle back action */ },
+            onRightClick = { /* Handle edit action */ }
+        )
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun PreviewHeaderUpload() {
+    MaterialTheme {
+        Header.Upload(
+            title = "Upload File",
+            onLeftClick = { /* Handle back action */ },
+            onRightClick = { /* Handle upload action */ }
+        )
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun PreviewHeaderCreate() {
+    MaterialTheme {
+        Header.Create(
+            title = "Create New",
+            onLeftClick = { /* No left action */ },
+            onRightClick = { /* Handle close action */ }
         )
     }
 }
