@@ -28,5 +28,9 @@ fun AppNavGraph(navController: NavHostController) {
             // Here is the fix: pass navController to DeliveryRentalView
             DeliveryRentalView(navController = navController)
         }
+//        composable("transaction_detail/{palletCode}") { backStackEntry ->
+//            val palletCode = backStackEntry.arguments?.getString("palletCode") ?: ""
+//            TransactionDetailView(palletCode)
+//        }
     }
 }

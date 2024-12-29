@@ -1,4 +1,4 @@
-// /app/src/main/java/com/example/pmr/components/PalletList.kt
+// /components/PalletList.kt
 package com.example.pmr.components
 
 import androidx.compose.foundation.layout.*

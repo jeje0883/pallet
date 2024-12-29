@@ -74,7 +74,7 @@ fun SearchField(
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent,
         ),
-        textStyle = MaterialTheme.typography.bodyMedium.copy(color = Color.White) // Text color matches the container
+        textStyle = MaterialTheme.typography.bodyMedium.copy(color = Color.Black) // Text color matches the container
     )
 }
 

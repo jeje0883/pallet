@@ -146,10 +146,21 @@ fun QRTransactionMenu(navController: NavHostController) {
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
+
+//show only with nav
+//fun PreviewQRTransactionMenu() {
+//    // Using a placeholder since we don't have NavController in preview
+//    QRTransactionMenuItem(
+//        transactionType = QRTransactionType.DeliveryRental,
+//        navController = androidx.navigation.compose.rememberNavController()
+//    )
+//}
+
+//show all with mock nav
 fun PreviewQRTransactionMenu() {
-    // Using a placeholder since we don't have NavController in preview
-    QRTransactionMenuItem(
-        transactionType = QRTransactionType.DeliveryRental,
-        navController = androidx.navigation.compose.rememberNavController()
-    )
+    // Mock NavController for preview purposes
+    val mockNavController = androidx.navigation.compose.rememberNavController()
+
+    // Render the entire QRTransactionMenu
+    QRTransactionMenu(navController = mockNavController)
 }

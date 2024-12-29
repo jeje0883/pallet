@@ -1,4 +1,4 @@
-// /app/src/main/java/com/example/pmr/components/PalletItem.kt
+// components/PalletItem.kt
 package com.example.pmr.components
 
 import androidx.compose.foundation.clickable

@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 // For alignment and arrangement references
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 
 // For composable calls like NavHost, currentBackStackEntryAsState, rememberNavController
 import androidx.navigation.compose.NavHost
@@ -42,6 +43,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun AppScreen() {
     val navController = rememberNavController()
