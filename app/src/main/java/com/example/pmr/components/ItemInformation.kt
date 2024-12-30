@@ -1,3 +1,5 @@
+//components/ItemInformation.kt
+
 package com.example.pmr.components
 
 import androidx.compose.foundation.border
@@ -12,9 +14,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.pmr.data.Pallet
+import com.example.pmr.navigation.NavRoutes
 
 @Composable
-fun ItemInformation() {
+fun ItemInformation(
+    pallet: Pallet,
+    navController : NavHostController? = null
+) {
     Box(
         modifier = Modifier
             .height(280.dp)
@@ -44,7 +53,12 @@ fun ItemInformation() {
                     modifier = Modifier.weight(1f) // Occupy available space
                 )
                 CustomButton.ScanQR (
-                    onClick = { /* Handle Scan QR Click */ }
+                    onClick = {
+                        navController?.navigate(NavRoutes.ScanQRView.route) {
+                            // Optionally pop up to avoid building up a large stack:
+                            popUpTo(NavRoutes.ScanQRView.route) { inclusive = true }
+                        }
+                    }
                 )
             }
 
@@ -111,7 +125,9 @@ fun ItemInformation() {
             Spacer(modifier = Modifier.height(16.dp))
 
             CustomButton.ScanHistory (
-                onClick = { /* Handle Scan History Click */ }
+                onClick = {
+
+                }
             )
 
 //            Spacer(modifier = Modifier.height(4.dp))
@@ -126,5 +142,12 @@ fun ItemInformation() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewItemInformation() {
-    ItemInformation()
+    ItemInformation(
+        pallet = Pallet(
+            source = "PMR Pallet Ltd. Co.",
+            customer = "Alaska Milk Corporation",
+            code = "DR-AMC-LAG-001",
+            deliveryReceipt = "#20691"
+        )
+    )
 }

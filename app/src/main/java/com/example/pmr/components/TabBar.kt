@@ -39,13 +39,13 @@ fun BottomNavigationBar(
             NavigationItem(
                 iconRes = when (item) {
                     NavRoutes.Home -> R.drawable.home_icon
-                    NavRoutes.QR -> R.drawable.qr_icon
+                    NavRoutes.TransactionMenu -> R.drawable.qr_icon
                     NavRoutes.More -> R.drawable.more_icon
                     else -> R.drawable.more_icon // fallback if needed
                 },
                 label = when (item) {
                     NavRoutes.Home -> "Home"
-                    NavRoutes.QR -> "QR"
+                    NavRoutes.TransactionMenu -> "QR"
                     NavRoutes.More -> "More"
                     else -> "Unknown"
                 },

@@ -34,6 +34,7 @@ fun SearchField(
         value = textState,
         onValueChange = { newValue ->
             textState = newValue
+            onSearch(newValue.text)
         },
         modifier = modifier
             .fillMaxWidth()

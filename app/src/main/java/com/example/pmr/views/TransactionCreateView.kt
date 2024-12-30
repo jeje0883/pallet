@@ -1,8 +1,11 @@
 package com.example.pmr.views
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -11,8 +14,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import com.example.pmr.components.CustomButton
 import com.example.pmr.components.Header
 import com.example.pmr.components.InputType
+import com.example.pmr.navigation.NavRoutes
 
 @Composable
 fun CreateScreen(
@@ -81,17 +88,39 @@ fun CreateScreen(
             onValueChange = { selectedOption = it },
             title = "Supporting Documents"
         )
+
+        Spacer(modifier = Modifier.height(10.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            CustomButton.Confirm(
+                onClick = { /* Handle Confirm Click */ }
+            )
+        }
+
+        Spacer(modifier = Modifier.height(80.dp))
     }
 }
 
 @Composable
-fun TransactionCreateView() {
+fun TransactionCreateView(
+    navController: NavHostController? = null
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Header.Create(title = "Create Delivery - Rental")
+        Header.Create(
+            title = "Create Delivery - Rental",
+            onRightClick = {
+                    navController?.navigate(NavRoutes.Rentals.route) {
+                    // Optionally pop up to avoid building up a large stack:
+                    popUpTo(NavRoutes.Rentals.route) { inclusive = true }
+                }
+            }
+            )
         CreateScreen()
     }
 }

@@ -102,7 +102,7 @@ private fun generateQRCodeBitmap(data: String, size: Int): Bitmap? {
 
 // Accepts string to be converted to QR Code
 @Composable
-fun GenerateQR(data: String) {
+fun GenerateQRView(data: String) {
     var selectedItem by remember { mutableStateOf("Item") }
 
     Column(
@@ -213,6 +213,6 @@ fun GenerateQR(data: String) {
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun PreviewGenerateQR() {
-    GenerateQR("SN XWB907335")
+fun PreviewGenerateQRView() {
+    GenerateQRView("SN XWB907335")
 }

@@ -21,7 +21,7 @@ import com.example.pmr.R
 @Composable
 fun PalletItem(
     pallet: Pallet,
-    onItemClick: (Pallet) -> Unit = {}
+    onItemClick: (Pallet) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -101,17 +101,18 @@ fun PalletItem(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewPalletItem() {
     MaterialTheme {
         PalletItem(
-            pallet = com.example.pmr.data.Pallet(
+            pallet = Pallet(
                 source = "PMR Pallet Ltd. Co.",
                 customer = "Alaska Milk Corporation",
                 code = "DR-AMC-LAG-001",
-                deliveryReceipt = "#20691",
-            )
+                deliveryReceipt = "#20691"
+            ),
+            onItemClick = {}
         )
     }
 }

@@ -55,7 +55,7 @@ fun AppScreen() {
     // Define which top-level routes you want in the bottom nav
     val navigationItems = listOf(
         NavRoutes.Home,
-        NavRoutes.QR,
+        NavRoutes.TransactionMenu,
         NavRoutes.More
     )
 

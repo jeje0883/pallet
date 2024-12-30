@@ -1,3 +1,4 @@
+
 // /components/PalletList.kt
 package com.example.pmr.components
 
@@ -9,23 +10,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.pmr.data.MockPalletData
 import com.example.pmr.data.Pallet
+
 
 @Composable
 fun PalletList(
-    pallets: List<Pallet> = MockPalletData.palletList, // Default to the 10 mock entries
-    onItemClick: (Pallet) -> Unit = {},
-    onPalletClick: (Pallet) -> Unit
+    pallets: List<Pallet> , // Default to the 10 mock entries
+    onItemClick: (Pallet) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(vertical = 8.dp)
+        contentPadding = PaddingValues(
+            top = 8.dp,
+            bottom =90.dp
+        )
     ) {
         items(pallets) { pallet ->
             PalletItem(
                 pallet = pallet,
-                onItemClick = { onItemClick(pallet) }
+                onItemClick = onItemClick// link to TransactionDetailView will the pallet data
             )
         }
     }
@@ -33,14 +36,19 @@ fun PalletList(
 
 @Composable
 fun PalletListScreen(
-    onItemClick: (Pallet) -> Unit = {},
+    pallets: List<Pallet>,
+    onItemClick: (Pallet) -> Unit,
     onPalletClick: (Pallet) -> Unit = {}
 ) {
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
         // For example, you could add a header or search field here
-        PalletList(onItemClick = onItemClick, onPalletClick = onPalletClick)
+//        PalletList(onItemClick = onItemClick, onPalletClick = onPalletClick)
+        PalletList(
+            pallets = pallets,
+            onItemClick = onItemClick
+        )
     }
 }
 
@@ -48,6 +56,18 @@ fun PalletListScreen(
 @Composable
 fun PreviewPalletList() {
     MaterialTheme {
-        PalletListScreen()
+        PalletListScreen(
+            pallets = listOf(
+                Pallet(
+                    source = "PMR Pallet Ltd. Co.",
+                    customer = "Alaska Milk Corporation",
+                    code = "DR-AMC-LAG-001",
+                    deliveryReceipt = "#20691"
+                )
+            ),
+            onItemClick = {
+                // do nothing or handle item click
+            }
+        )
     }
 }

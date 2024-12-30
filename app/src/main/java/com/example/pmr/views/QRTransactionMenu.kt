@@ -32,7 +32,7 @@ enum class QRTransactionType(
         description = "Manage rental deliveries to customers",
         onClick = { navController ->
             // Navigate to DeliveryRental route
-            navController.navigate(NavRoutes.DeliveryRental.route)
+            navController.navigate(NavRoutes.Rentals.route)
         }
     ),
     CustomerReturn(

@@ -1,3 +1,4 @@
+
 // /views/TransactionView.kt
 package com.example.pmr.views
 
@@ -11,29 +12,48 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.pmr.components.Header
 import com.example.pmr.components.PalletList
+import com.example.pmr.components.PalletListScreen
 import com.example.pmr.components.SearchField
 import com.example.pmr.data.Pallet
 import com.example.pmr.data.MockPalletData
 import com.example.pmr.navigation.NavRoutes
 
+suspend fun fetchPalletsFromApi(): List<Pallet> {
+    // In real usage, make a network request here
+    return emptyList() // Placeholder
+}
+
 @Composable
 fun TransanctionView(
-    navController: NavHostController, // Pass NavController so we can navigate
+    navController: NavHostController? = null, // Pass NavController so we can navigate
     onAddClick: () -> Unit = {},
     onPalletClick: (Pallet) -> Unit = {}
 ) {
     // State for the search query
+    var allPallets by remember { mutableStateOf<List<Pallet>>(emptyList()) }
     var searchQuery by remember { mutableStateOf("") }
+
+    // Fetch data on first launch
+    LaunchedEffect(Unit) {
+        val apiData = fetchPalletsFromApi()
+        allPallets = if (apiData.isEmpty()) {
+            MockPalletData.palletList
+        } else {
+            apiData
+        }
+    }
 
     // Filtered pallet list based on the search query
     val filteredPallets = if (searchQuery.isEmpty()) {
-        MockPalletData.palletList
+        allPallets
     } else {
-        MockPalletData.palletList.filter {
+        allPallets.filter {
             it.source.contains(searchQuery, ignoreCase = true) ||
+                    // fields to include in search
                     it.customer.contains(searchQuery, ignoreCase = true) ||
                     it.code.contains(searchQuery, ignoreCase = true) ||
-                    it.deliveryReceipt.contains(searchQuery, ignoreCase = true)
+                    it.deliveryReceipt.contains(searchQuery, ignoreCase = true) ||
+                    it.source.contains(searchQuery, ignoreCase = true)
         }
     }
 
@@ -48,13 +68,17 @@ fun TransanctionView(
         Header.Add(
             title = "Delivery - Rental",
             onLeftClick = {
-                // Navigate back to QRTransactionMenu (the "qr" route)
-                navController.navigate(NavRoutes.QR.route) {
+                navController?.navigate(NavRoutes.TransactionMenu.route) {
                     // Optionally pop up to avoid building up a large stack:
-                    popUpTo(NavRoutes.QR.route) { inclusive = true }
+                    popUpTo(NavRoutes.TransactionMenu.route) { inclusive = true }
                 }
             },
-            onRightClick = onAddClick
+            onRightClick = {
+                navController?.navigate(NavRoutes.TransactionCreateView.route) {
+                    // Optionally pop up to avoid building up a large stack:
+                    popUpTo(NavRoutes.TransactionCreateView.route) { inclusive = true }
+                }
+            }
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -72,10 +96,15 @@ fun TransanctionView(
         Spacer(modifier = Modifier.height(16.dp))
 
         // Pallet List Section
-        PalletList(
+        PalletListScreen(
             pallets = filteredPallets,
-            onPalletClick = onPalletClick
+            onItemClick = { pallet ->
+                // Navigate to detail, passing the pallet’s code
+                navController?.navigate("transaction_detail/${pallet.code}")
+            }
         )
+
+
     }
 }
 
@@ -83,8 +112,8 @@ fun TransanctionView(
 @Composable
 fun PreviewDeliveryRentalView() {
     // Use a placeholder navController for preview
-    val dummyNavController = androidx.navigation.compose.rememberNavController()
+
     MaterialTheme {
-        TransanctionView(navController = dummyNavController)
+        TransanctionView()
     }
 }

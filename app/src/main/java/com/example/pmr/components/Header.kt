@@ -70,11 +70,14 @@ fun HeaderComposable(
                     .clickable { onLeftClick() }
             )
         } else {
-            Spacer(modifier = Modifier.size(24.dp)) // Placeholder for alignment
+//            Spacer(modifier = Modifier.size(24.dp)) // Placeholder for alignment
+
         }
 
-        Spacer(modifier = Modifier.width(16.dp)) // Spacing between icon and title
-
+        // Spacing between icon and title
+        if (headerType.leftIcon != null) {
+            Spacer(modifier = Modifier.width(16.dp))
+        }
         // Title with weight to push the right icon to the end
         Text(
             text = title,

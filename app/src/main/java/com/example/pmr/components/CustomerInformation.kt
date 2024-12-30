@@ -1,3 +1,5 @@
+// /components/CustomerInformation.kt
+
 package com.example.pmr.components
 
 import androidx.compose.foundation.layout.*
@@ -7,9 +9,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.pmr.data.Pallet
 
 @Composable
-fun CustomerInformation() {
+fun CustomerInformation(
+    pallet: Pallet
+    ) {
+
     val scrollState = rememberScrollState() // Create a scroll state
     Column(
         modifier = Modifier
@@ -20,68 +26,74 @@ fun CustomerInformation() {
 
         InputType.Text(
             title = "Code",
-            value = "DR-AMC-LAG-001",
+            value = pallet.code,
             onValueChange = { },
         )
         Spacer(modifier = Modifier.padding(10.dp))
         InputType.Text(
             title = "Customer",
-            value = "Alaska Milk Corporation",
+            value = pallet.customer,
             onValueChange = { },
         )
         Spacer(modifier = Modifier.padding(10.dp))
         InputType.Text(
             title = "Delivery Receipt",
-            value = "20691",
+            value = pallet.deliveryReceipt,
             onValueChange = { },
         )
         Spacer(modifier = Modifier.padding(10.dp))
-        InputType.Date(
-            title = "Delivery Date",
-            value = "12/01/2024",
-            onValueChange = { },
-        )
+        pallet.deliveryDate?.let {
+            InputType.Date(
+                title = "Delivery Date",
+                value = it,
+                onValueChange = { },
+            )
+        }
         Spacer(modifier = Modifier.padding(10.dp))
-        InputType.Date(
-            title = "Heat Treatment Date",
-            value = "12/01/2024",
-            onValueChange = { },
-        )
+        pallet.heatTreatmentDate?.let {
+            InputType.Date(
+                title = "Heat Treatment Date",
+                value = it,
+                onValueChange = { },
+            )
+        }
         Spacer(modifier = Modifier.padding(10.dp))
-        InputType.Date(
-            title = "Chemical Treatment Date",
-            value = "12/01/2024",
-            onValueChange = { },
-        )
+        pallet.chemicalTreatmentDate?.let {
+            InputType.Date(
+                title = "Chemical Treatment Date",
+                value = it,
+                onValueChange = { },
+            )
+        }
         Spacer(modifier = Modifier.padding(10.dp))
-        InputType.Text(
-            title = "Driver name",
-            value = "Juan Dela Cruz",
-            onValueChange = { },
-        )
+        pallet.driver?.let {
+            InputType.Text(
+                title = "Driver name",
+                value = it,
+                onValueChange = { },
+            )
+        }
         Spacer(modifier = Modifier.padding(10.dp))
-        InputType.Text(
-            title = "Trucker Name",
-            value = "Juan Move",
-            onValueChange = { },
-        )
-        Spacer(modifier = Modifier.padding(10.dp))
-        InputType.Text(
-            title = "Plate Number",
-            value = "ATX5050",
-            onValueChange = { },
-        )
-        Spacer(modifier = Modifier.padding(10.dp))
-        InputType.Text(
-            title = "Supporting Document",
-            value = "Attached",
-            onValueChange = { },
-        )
+        pallet.truckPlateNumber?.let {
+            InputType.Text(
+                title = "Plate Number",
+                value = it,
+                onValueChange = { },
+            )
+        }
+
+        Spacer(modifier = Modifier.padding(40.dp))
+
     }
 }
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewCustomerInformation() {
-    CustomerInformation()
+    CustomerInformation(        pallet = Pallet(
+        source = "PMR Pallet Ltd. Co.",
+        customer = "Alaska Milk Corporation",
+        code = "DR-AMC-LAG-001",
+        deliveryReceipt = "#20691"
+    ))
 }

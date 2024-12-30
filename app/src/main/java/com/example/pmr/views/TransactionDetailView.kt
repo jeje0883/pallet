@@ -1,3 +1,5 @@
+// TransactionDetailView.kt
+
 package com.example.pmr.views
 
 import androidx.compose.foundation.layout.*
@@ -11,9 +13,17 @@ import com.example.pmr.components.CustomerInformation
 import com.example.pmr.components.Header
 import com.example.pmr.components.ItemInformation
 import com.example.pmr.components.TransactionDetailViewSwitcher
+import com.example.pmr.data.Pallet
+import com.example.pmr.navigation.NavRoutes
+import androidx.navigation.NavHostController
+
+
 
 @Composable
-fun TransactionDetail() {
+fun TransactionDetailView(
+    navController: NavHostController? = null,
+    pallet: Pallet
+) {
     var selectedTab by remember { mutableStateOf(0) }
 
     // Main content
@@ -25,7 +35,16 @@ fun TransactionDetail() {
         horizontalAlignment = Alignment.Start
     ) {
         // Section: Header
-        Header.Edit(title = "DR-AMC-LAG-001")
+        Header.Edit(
+            title = pallet.code,
+            onLeftClick = {
+                navController?.navigate(NavRoutes.Rentals.route) {
+                    // Optionally pop up to avoid building up a large stack:
+                    popUpTo(NavRoutes.Rentals.route) { inclusive = true }
+                }
+            }
+
+        )
         Spacer(modifier = Modifier.height(10.dp))
 
         // Section: Tab Switcher
@@ -39,8 +58,8 @@ fun TransactionDetail() {
 
         // Section: Conditional Content Based on Selected Tab
         when (selectedTab) {
-            0 -> CustomerInformation()
-            1 -> ItemInformation()
+            0 -> CustomerInformation(pallet)
+            1 -> ItemInformation(pallet, navController = navController)
             else -> {}
         }
     }
@@ -48,6 +67,14 @@ fun TransactionDetail() {
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun PreviewTransactionDetail() {
-    TransactionDetail()
+fun PreviewTransactionDetailView() {
+
+    TransactionDetailView(
+        pallet = Pallet(
+            source = "PMR Pallet Ltd. Co.",
+            customer = "Alaska Milk Corporation",
+            code = "DR-AMC-LAG-001",
+            deliveryReceipt = "#20691"
+        )
+    )
 }

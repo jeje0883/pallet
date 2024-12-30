@@ -16,11 +16,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.pmr.components.CornerBorderBox
 import com.example.pmr.components.Header
+import com.example.pmr.navigation.NavRoutes
 
 @Composable
-fun ScanQRView() {
+fun ScanQRView(
+    navController: NavHostController? = null
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -28,7 +33,15 @@ fun ScanQRView() {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Header.Scan(title = "Scan")
+        Header.Scan(
+            title = "Scan",
+            onLeftClick = {
+                navController?.navigate(NavRoutes.TransactionDetailView.route) {
+                    // Optionally pop up to avoid building up a large stack:
+                    popUpTo(NavRoutes.TransactionDetailView.route) { inclusive = true }
+                }
+            }
+        )
         Spacer(modifier = Modifier.padding(14.dp))
         Text(
             text = "Place the QR code within the frame"
@@ -42,12 +55,10 @@ fun ScanQRView() {
         CornerBorderBox(
             modifier = Modifier.size(300.dp),
             cornerLength = 40.dp,       // how long each corner line should be
-//            cornerRadius = 6.dp,       // “roundness” of the line ends
             borderWidth = 2.dp,         // thickness of the lines
             borderColor = Color.Black
         ) {
-            // Your inner content goes here (if any)
-            // ...
+//            ScannerView()
         }
     }
 }
