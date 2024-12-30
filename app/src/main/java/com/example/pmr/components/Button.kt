@@ -43,7 +43,7 @@ enum class ButtonType(
         fillColor = Color(0xFF268AF5), // Blue
         text = "Print",
         iconRes = R.drawable.print_icon, // Your PNG icon
-        width = 104
+        width = 150
     ),
     ScanQR(
         textColor = Color.White,

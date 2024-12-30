@@ -16,6 +16,10 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pmr.R
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TextField
+import androidx.compose.material3.ExperimentalMaterial3Api
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -67,13 +71,13 @@ fun SearchField(
         },
         singleLine = true,
         // Customize the TextField colors correctly using TextFieldDefaults
-        colors = TextFieldDefaults.textFieldColors(
-            containerColor = Color(0xFFF0F2F5), // Match the background color
-            cursorColor = Color(0xFF268AF5), // Example cursor color
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent,
-        ),
+//        colors = TextFieldDefaults.textFieldColors(
+//            containerColor = Color(0xFFF0F2F5), // Match the background color
+//            cursorColor = Color(0xFF268AF5), // Example cursor color
+//            focusedIndicatorColor = Color.Transparent,
+//            unfocusedIndicatorColor = Color.Transparent,
+//            disabledIndicatorColor = Color.Transparent,
+//        ),
         textStyle = MaterialTheme.typography.bodyMedium.copy(color = Color.Black) // Text color matches the container
     )
 }

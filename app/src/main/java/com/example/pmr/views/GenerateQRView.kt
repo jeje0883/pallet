@@ -31,6 +31,8 @@ import com.example.pmr.components.InputType
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.unit.sp
 
 
 @Composable
@@ -48,7 +50,8 @@ fun GenerateQRCode(
             bitmap = it.asImageBitmap(),
             contentDescription = "QR Code",
             modifier = modifier
-                .fillMaxSize()
+                .size(290.dp)
+//                .fillMaxSize()
         )
     }
 }
@@ -104,7 +107,7 @@ fun GenerateQR(data: String) {
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
+//            .fillMaxSize()
             .padding(16.dp),
         verticalArrangement = Arrangement.Top, // Start from the top
         horizontalAlignment = Alignment.CenterHorizontally // Center horizontally
@@ -124,13 +127,18 @@ fun GenerateQR(data: String) {
 
         // Row containing the rotated text and QR code
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .padding(16.dp)
+                .width(305.dp)
+                .height(325.dp)
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically, // Center vertically within the Row
             horizontalArrangement = Arrangement.Center // Center horizontally within the Row
         ) {
             // Rotated "PROPERTY OF PMR" Text
             Text(
                 text = "PROPERTY OF PMR",
+                fontSize = 10.sp,
                 modifier = Modifier
                     .graphicsLayer {
 //                        rotationZ = -90f // Rotate text 90 degrees counter-clockwise
@@ -142,9 +150,13 @@ fun GenerateQR(data: String) {
             // Column containing Data Text and QR Code
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .height(330.dp)
             ) {
                 Text(
+                    //font "Inter"
+                    fontSize = 10.sp,
                     text = data,
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
@@ -155,18 +167,22 @@ fun GenerateQR(data: String) {
 //                Spacer(modifier = Modifier.height(8.dp)) // Spacer for spacing
                 Text(
                     text = "ECR T12 - 1000x1200MM",
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                    fontSize = 10.sp,
+                    modifier = Modifier
+                        .height(10.dp)
+                        .align(Alignment.CenterHorizontally)
                 )
             }
         }
 
-        Spacer(modifier = Modifier.weight(1f)) // Pushes the bottom content to the bottom
+//        Spacer(modifier = Modifier.weight(1f)) // Pushes the bottom content to the bottom
 
         // Bottom Row with Checkbox and Generate Button
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp), // Spacer at the bottom
+//                .padding(bottom = 16.dp)
+                .fillMaxWidth(),
+                // Spacer at the bottom
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically // Vertically center the contents
         ) {
