@@ -1,4 +1,3 @@
-// /app/src/main/java/com/example/pmr/data/MockPalletData.kt
 package com.example.pmr.data
 
 object MockPalletData {
@@ -17,7 +16,9 @@ object MockPalletData {
             returnDate = null,
             isAdvanceReplacement = false,
             notes = "Handle with care",
-            typeOfActivity = null
+            typeOfActivity = null,
+            scanIdentifier = "XWB241097",
+            dateScanned = "Dec 09, 2024 12:53:07 PM"
         ),
         Pallet(
             source = "PMR Pallet Ltd. Co.",
@@ -33,7 +34,9 @@ object MockPalletData {
             returnDate = null,
             isAdvanceReplacement = false,
             notes = "Check expiry",
-            typeOfActivity = "Export"
+            typeOfActivity = "Export",
+            scanIdentifier = "YTC341298",
+            dateScanned = "Dec 10, 2024 09:15:03 AM"
         ),
         Pallet(
             source = "PMR Pallet Ltd. Co.",
@@ -49,7 +52,9 @@ object MockPalletData {
             returnDate = "2023-09-10",
             isAdvanceReplacement = false,
             notes = "Store upright",
-            typeOfActivity = "Local Delivery"
+            typeOfActivity = "Local Delivery",
+            scanIdentifier = "ZRD452389",
+            dateScanned = "Dec 11, 2024 03:22:05 PM"
         ),
         Pallet(
             source = "PMR Pallet Ltd. Co.",
@@ -65,7 +70,9 @@ object MockPalletData {
             returnDate = null,
             isAdvanceReplacement = true,
             notes = null,
-            typeOfActivity = "Replacement"
+            typeOfActivity = "Replacement",
+            scanIdentifier = "ASD563480",
+            dateScanned = "Dec 12, 2024 11:45:09 AM"
         ),
         Pallet(
             source = "PMR Pallet Ltd. Co.",
@@ -81,7 +88,9 @@ object MockPalletData {
             returnDate = null,
             isAdvanceReplacement = false,
             notes = "Fragile items",
-            typeOfActivity = "Local Delivery"
+            typeOfActivity = "Local Delivery",
+            scanIdentifier = "FGH674571",
+            dateScanned = "Dec 13, 2024 07:30:02 PM"
         ),
         Pallet(
             source = "PMR Pallet Ltd. Co.",
@@ -97,7 +106,9 @@ object MockPalletData {
             returnDate = "2023-09-12",
             isAdvanceReplacement = false,
             notes = "Check for leaks",
-            typeOfActivity = "Export"
+            typeOfActivity = "Export",
+            scanIdentifier = "JKL785662",
+            dateScanned = "Dec 14, 2024 05:18:04 AM"
         ),
         Pallet(
             source = "PMR Pallet Ltd. Co.",
@@ -113,7 +124,9 @@ object MockPalletData {
             returnDate = null,
             isAdvanceReplacement = false,
             notes = "Keep cool",
-            typeOfActivity = "Local Delivery"
+            typeOfActivity = "Local Delivery",
+            scanIdentifier = "MNB896753",
+            dateScanned = "Dec 15, 2024 02:50:06 PM"
         ),
         Pallet(
             source = "PMR Pallet Ltd. Co.",
@@ -129,7 +142,9 @@ object MockPalletData {
             returnDate = null,
             isAdvanceReplacement = true,
             notes = "High priority",
-            typeOfActivity = "Replacement"
+            typeOfActivity = "Replacement",
+            scanIdentifier = "QWE907844",
+            dateScanned = "Dec 16, 2024 10:05:01 AM"
         ),
         Pallet(
             source = "PMR Pallet Ltd. Co.",
@@ -145,7 +160,9 @@ object MockPalletData {
             returnDate = null,
             isAdvanceReplacement = false,
             notes = "No stacking over 3 pallets",
-            typeOfActivity = "Local Delivery"
+            typeOfActivity = "Local Delivery",
+            scanIdentifier = "RTY018935",
+            dateScanned = "Dec 17, 2024 08:40:03 PM"
         ),
         Pallet(
             source = "PMR Pallet Ltd. Co.",
@@ -161,7 +178,9 @@ object MockPalletData {
             returnDate = "2023-09-15",
             isAdvanceReplacement = false,
             notes = "Keep upright",
-            typeOfActivity = "Local Delivery"
+            typeOfActivity = "Local Delivery",
+            scanIdentifier = "UIO129026",
+            dateScanned = "Dec 18, 2024 06:25:05 AM"
         )
     )
 }

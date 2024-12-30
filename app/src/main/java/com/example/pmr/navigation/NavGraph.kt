@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.pmr.views.DeliveryRentalView
+import com.example.pmr.views.TransanctionView
 import com.example.pmr.views.QRTransactionMenu
 import com.example.pmr.views.MoreMenu
 import com.example.pmr.views.Home
@@ -25,8 +25,8 @@ fun AppNavGraph(navController: NavHostController) {
             MoreMenu()
         }
         composable(NavRoutes.DeliveryRental.route) {
-            // Here is the fix: pass navController to DeliveryRentalView
-            DeliveryRentalView(navController = navController)
+            // Here is the fix: pass navController to TransanctionView
+            TransanctionView(navController = navController)
         }
 //        composable("transaction_detail/{palletCode}") { backStackEntry ->
 //            val palletCode = backStackEntry.arguments?.getString("palletCode") ?: ""

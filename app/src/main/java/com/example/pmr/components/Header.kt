@@ -33,6 +33,14 @@ enum class HeaderType(
     Create(
         leftIcon = null, // No left icon
         rightIcon = R.drawable.close_icon
+    ),
+    GenerateQR(
+        leftIcon = R.drawable.back_icon, // No left icon
+        rightIcon = null
+    ),
+    Scan(
+        leftIcon = R.drawable.back_icon, // No left icon
+        rightIcon = R.drawable.scan_header_icon
     );
 
 }
@@ -148,6 +156,34 @@ object Header {
             onRightClick = onRightClick
         )
     }
+
+    @Composable
+    fun GenerateQR(
+        title: String,
+        onLeftClick: () -> Unit = {},
+        onRightClick: () -> Unit = {}
+    ) {
+        HeaderComposable(
+            headerType = HeaderType.GenerateQR,
+            title = title,
+            onLeftClick = onLeftClick,
+            onRightClick = onRightClick
+        )
+    }
+
+    @Composable
+    fun Scan(
+        title: String,
+        onLeftClick: () -> Unit = {},
+        onRightClick: () -> Unit = {}
+    ) {
+        HeaderComposable(
+            headerType = HeaderType.Scan,
+            title = title,
+            onLeftClick = onLeftClick,
+            onRightClick = onRightClick
+        )
+    }
 }
 
 @Preview(showBackground = true, showSystemUi = true)
@@ -198,3 +234,28 @@ fun PreviewHeaderCreate() {
         )
     }
 }
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun PreviewGenerateQR() {
+    MaterialTheme {
+        Header.GenerateQR(
+            title = "Generate QR Code",
+            onLeftClick = { /* No left action */ },
+            onRightClick = { /* Handle close action */ }
+        )
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun PreviewScan() {
+    MaterialTheme {
+        Header.Scan(
+            title = "Scan",
+            onLeftClick = { /* No left action */ },
+            onRightClick = { /* Handle close action */ }
+        )
+    }
+}
+

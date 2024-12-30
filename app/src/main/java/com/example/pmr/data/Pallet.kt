@@ -20,6 +20,8 @@ data class Pallet(
     val isAdvanceReplacement: Boolean? = null, // Optional
     val notes: String? = null,               // Optional
     val typeOfActivity: String? = null,      // Optional
+    val scanIdentifier: String? = null,
+    val dateScanned: String? = null,
 
     @DrawableRes val imageRes: Int? = null // Optional image resource
 )

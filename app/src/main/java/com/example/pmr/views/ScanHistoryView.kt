@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pmr.components.Header
 import com.example.pmr.components.HeaderType
+import com.example.pmr.components.ScannedListScreen
 import com.example.pmr.components.SearchField
 
 
@@ -46,18 +47,7 @@ fun ScanHistoryView() {
             //semi bold
             //typography Inter
         ) {
-            Text(
-                text = "Scan History",
-                modifier = Modifier.weight(8.8f)
-            )
-            Text(
-                text = "2/240",
-                modifier = Modifier.weight(1.2f)
-            )
-            Text(
-                text = "PCS",
-                modifier = Modifier.weight(1f)
-            )
+            ScannedListScreen()
         }
 
 

@@ -5,19 +5,19 @@
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="PreviewHeaderCreate">
+      <SelectionState runConfigName="AppScreen">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="PreviewHeaderUpload">
+      <SelectionState runConfigName="PreviewTransactionCreateView">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="PreviewHeaderAdd">
+      <SelectionState runConfigName="PreviewInputComponents">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="PreviewHeaderEdit">
+      <SelectionState runConfigName="PreviewInputType">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="PreviewScanHistoryView">
+      <SelectionState runConfigName="PreviewGenerateQR">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

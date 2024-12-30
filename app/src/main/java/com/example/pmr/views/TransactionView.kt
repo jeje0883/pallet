@@ -1,4 +1,4 @@
-// /views/DeliveryRentalView.kt
+// /views/TransactionView.kt
 package com.example.pmr.views
 
 import androidx.compose.foundation.layout.*
@@ -17,7 +17,7 @@ import com.example.pmr.data.MockPalletData
 import com.example.pmr.navigation.NavRoutes
 
 @Composable
-fun DeliveryRentalView(
+fun TransanctionView(
     navController: NavHostController, // Pass NavController so we can navigate
     onAddClick: () -> Unit = {},
     onPalletClick: (Pallet) -> Unit = {}
@@ -85,6 +85,6 @@ fun PreviewDeliveryRentalView() {
     // Use a placeholder navController for preview
     val dummyNavController = androidx.navigation.compose.rememberNavController()
     MaterialTheme {
-        DeliveryRentalView(navController = dummyNavController)
+        TransanctionView(navController = dummyNavController)
     }
 }

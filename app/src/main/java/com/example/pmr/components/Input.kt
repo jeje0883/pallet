@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
@@ -17,11 +16,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.pmr.R // Replace with your actual drawable imports
+import com.example.pmr.R
 
-// Renamed enum class to avoid confusion with android.text.InputType
-enum class CustomInputType(
-    val defaultTitle: String, // Default title for the input
+enum class InputType(
+    val defaultTitle: String,
     val placeholderText: String,
     val icon: Int? = null,
     val keyboardType: KeyboardType = KeyboardType.Text
@@ -35,7 +33,7 @@ enum class CustomInputType(
     Date(
         defaultTitle = "Date Input",
         placeholderText = "Select date",
-        icon = R.drawable.calendar_icon, // Replace with your actual calendar icon
+        icon = R.drawable.calendar_icon,
         keyboardType = KeyboardType.Number
     ),
     Number(
@@ -47,7 +45,7 @@ enum class CustomInputType(
     Selection(
         defaultTitle = "Selection Input",
         placeholderText = "Choose option",
-        icon = R.drawable.dropdown_icon, // Replace with your actual dropdown icon
+        icon = R.drawable.dropdown_icon,
         keyboardType = KeyboardType.Text
     ),
     Boolean(
@@ -55,16 +53,102 @@ enum class CustomInputType(
         placeholderText = "Yes or No",
         icon = null,
         keyboardType = KeyboardType.Text
-    )
+    );
+
+    companion object {
+        @Composable
+        fun Text(
+            value: String = "",
+            onValueChange: (String) -> Unit,
+            title: String? = null,
+            placeholderText: String? = null
+        ) {
+            CustomInput(
+                type = Text,
+                value = value,
+                onValueChange = onValueChange,
+                title = title,
+                placeholderText = placeholderText
+            )
+        }
+
+        @Composable
+        fun Date(
+            value: String = "",
+            onValueChange: (String) -> Unit,
+            title: String? = null,
+            placeholderText: String? = null
+        ) {
+            CustomInput(
+                type = Date,
+                value = value,
+                onValueChange = onValueChange,
+                title = title,
+                placeholderText = placeholderText
+            )
+        }
+
+        @Composable
+        fun Number(
+            value: String = "",
+            onValueChange: (String) -> Unit,
+            title: String? = null,
+            placeholderText: String? = null
+        ) {
+            CustomInput(
+                type = Number,
+                value = value,
+                onValueChange = onValueChange,
+                title = title,
+                placeholderText = placeholderText
+            )
+        }
+
+        @Composable
+        fun Selection(
+            value: String = "",
+            onValueChange: (String) -> Unit,
+            options: List<String>,
+            title: String? = null,
+            placeholderText: String? = null,
+
+        ) {
+            CustomInput(
+                type = Selection,
+                value = value,
+                onValueChange = onValueChange,
+                options = options,
+                title = title,
+                placeholderText = placeholderText
+            )
+        }
+
+        @Composable
+        fun Boolean(
+            value: String = "",
+            onValueChange: (String) -> Unit,
+            title: String? = null,
+            placeholderText: String? = null
+        ) {
+            CustomInput(
+                type = Boolean,
+                value = value,
+                onValueChange = onValueChange,
+                title = title,
+                placeholderText = placeholderText
+            )
+        }
+    }
 }
 
 @Composable
 fun CustomInput(
-    type: CustomInputType,
+    type: InputType,
     value: String,
     onValueChange: (String) -> Unit,
     title: String? = null, // Customizable title
-    options: List<String> = emptyList() // Used for Selection type
+    options: List<String> = emptyList(), // Used for Selection type
+    placeholderText: String? = null // Optional placeholderText with fallback
 ) {
     Column(
         modifier = Modifier
@@ -77,18 +161,19 @@ fun CustomInput(
             style = MaterialTheme.typography.titleMedium
         )
 
-//        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
         // Input Field
         when (type) {
-            CustomInputType.Selection -> {
+            InputType.Selection -> {
                 DropdownInput(
                     options = options,
                     selectedOption = value,
-                    onOptionSelect = onValueChange
+                    onOptionSelect = onValueChange,
+                    placeholderText = placeholderText ?: "Choose option"
                 )
             }
-            CustomInputType.Boolean -> {
+            InputType.Boolean -> {
                 BooleanInput(
                     value = value,
                     onValueChange = onValueChange
@@ -106,16 +191,15 @@ fun CustomInput(
                         )
                         .background(
                             color = Color.White,
-                            shape = MaterialTheme.shapes.medium // Consistent shape with the border
+                            shape = RoundedCornerShape(6.dp) // Consistent shape with the border
                         )
-//                        .clickable { expanded = !expanded }
                         .padding(horizontal = 12.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     type.icon?.let { icon ->
                         Icon(
                             painter = painterResource(id = icon),
-                            contentDescription = null,
+                            contentDescription = type.defaultTitle,
                             modifier = Modifier.size(24.dp),
                             tint = Color.Gray
                         )
@@ -131,7 +215,7 @@ fun CustomInput(
                         decorationBox = { innerTextField ->
                             if (value.isEmpty()) {
                                 Text(
-                                    text = type.placeholderText,
+                                    text = placeholderText ?: type.placeholderText,
                                     color = Color.Gray,
                                     style = MaterialTheme.typography.bodyMedium
                                 )
@@ -150,7 +234,8 @@ fun CustomInput(
 fun DropdownInput(
     options: List<String>,
     selectedOption: String,
-    onOptionSelect: (String) -> Unit
+    onOptionSelect: (String) -> Unit,
+    placeholderText: String
 ) {
     var expanded by remember { mutableStateOf(false) }
     Box(
@@ -164,21 +249,21 @@ fun DropdownInput(
             )
             .background(
                 color = Color.White,
-                shape = MaterialTheme.shapes.medium // Consistent shape with the border
+                shape = RoundedCornerShape(6.dp) // Consistent shape with the border
             )
             .clickable { expanded = !expanded }
             .padding(horizontal = 12.dp),
         contentAlignment = Alignment.CenterStart
-
     ) {
         Text(
-            text = if (selectedOption.isEmpty()) "Choose option" else selectedOption,
+            text = if (selectedOption.isEmpty()) placeholderText else selectedOption,
             style = MaterialTheme.typography.bodyMedium,
             color = if (selectedOption.isEmpty()) Color.Gray else Color.Black
         )
         DropdownMenu(
             expanded = expanded,
-            onDismissRequest = { expanded = false }
+            onDismissRequest = { expanded = false },
+            modifier = Modifier.fillMaxWidth()
         ) {
             options.forEach { option ->
                 DropdownMenuItem(
@@ -226,93 +311,111 @@ fun BooleanInput(
     }
 }
 
-// Specific Composables for Direct Calls
-object InputType {
+private fun Modifier.inputModifier(): Modifier = this
+    .border(
+        width = 1.dp,
+        color = Color(0xFFDBE0E5),
+        shape = RoundedCornerShape(6.dp)
+    )
+    .background(
+        color = Color.White,
+        shape = RoundedCornerShape(6.dp)
+    )
+
+object InputTypeHelper {
     @Composable
     fun Text(
-        value: String,
+        value: String = "",
         onValueChange: (String) -> Unit,
-        title: String? = null
+        title: String? = null,
+        placeholderText: String? = null
     ) {
-        CustomInput(
-            type = CustomInputType.Text,
+        InputType.Text(
             value = value,
             onValueChange = onValueChange,
-            title = title
+            title = title,
+            placeholderText = placeholderText
         )
     }
 
     @Composable
     fun Date(
-        value: String,
+        value: String = "",
         onValueChange: (String) -> Unit,
-        title: String? = null
+        title: String? = null,
+        placeholderText: String? = null
     ) {
-        CustomInput(
-            type = CustomInputType.Date,
+        InputType.Date(
             value = value,
             onValueChange = onValueChange,
-            title = title
+            title = title,
+            placeholderText = placeholderText
         )
     }
 
     @Composable
     fun Number(
-        value: String,
+        value: String = "",
         onValueChange: (String) -> Unit,
-        title: String? = null
+        title: String? = null,
+        placeholderText: String? = null
     ) {
-        CustomInput(
-            type = CustomInputType.Number,
+        InputType.Number(
             value = value,
             onValueChange = onValueChange,
-            title = title
+            title = title,
+            placeholderText = placeholderText
         )
     }
 
     @Composable
     fun Selection(
-        value: String,
+        value: String = "",
         onValueChange: (String) -> Unit,
         options: List<String>,
-        title: String? = null
+        title: String? = null,
+        placeholderText: String? = null,
+        selectedOption: String? = null
+
     ) {
-        CustomInput(
-            type = CustomInputType.Selection,
+        InputType.Selection(
             value = value,
             onValueChange = onValueChange,
             options = options,
-            title = title
+            title = title,
+            placeholderText = placeholderText,
+
         )
     }
 
     @Composable
     fun Boolean(
-        value: String,
+        value: String = "",
         onValueChange: (String) -> Unit,
-        title: String? = null
+        title: String? = null,
+        placeholderText: String? = null
     ) {
-        CustomInput(
-            type = CustomInputType.Boolean,
+        InputType.Boolean(
             value = value,
             onValueChange = onValueChange,
-            title = title
+            title = title,
+            placeholderText = placeholderText
         )
     }
 }
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun PreviewInputType() {
+fun PreviewInputComponents() {
     var textValue by remember { mutableStateOf("") }
     var dateValue by remember { mutableStateOf("") }
     var numberValue by remember { mutableStateOf("") }
     var selectedOption by remember { mutableStateOf("") }
     var booleanValue by remember { mutableStateOf("") } // Use String for "Yes"/"No"
 
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column() {
         // Text Input with Custom Title
-        InputType.Text(
+        InputTypeHelper.Text(
             value = textValue,
             onValueChange = { textValue = it },
             title = "Custom Text Title"
@@ -320,14 +423,14 @@ fun PreviewInputType() {
         Spacer(modifier = Modifier.height(16.dp))
 
         // Date Input with Default Title
-        InputType.Date(
+        InputTypeHelper.Date(
             value = dateValue,
             onValueChange = { dateValue = it }
         )
         Spacer(modifier = Modifier.height(16.dp))
 
         // Number Input with Custom Title
-        InputType.Number(
+        InputTypeHelper.Number(
             value = numberValue,
             onValueChange = { numberValue = it },
             title = "Custom Number Title"
@@ -335,16 +438,17 @@ fun PreviewInputType() {
         Spacer(modifier = Modifier.height(16.dp))
 
         // Selection Input with Custom Title
-        InputType.Selection(
+        InputTypeHelper.Selection(
             value = selectedOption,
             onValueChange = { selectedOption = it },
             options = listOf("Option 1", "Option 2", "Option 3"),
-            title = "Custom Selection Title"
+            title = "Custom Selection Title",
+            placeholderText = "Select customer"
         )
         Spacer(modifier = Modifier.height(16.dp))
 
         // Boolean Input with Default Title
-        InputType.Boolean(
+        InputTypeHelper.Boolean(
             value = booleanValue,
             onValueChange = { newValue ->
                 booleanValue = newValue
